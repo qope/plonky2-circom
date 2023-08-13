@@ -1004,7 +1004,7 @@ mod tests {
     use plonky2::fri::reduction_strategies::FriReductionStrategy;
     use plonky2::fri::FriConfig;
     use plonky2::hash::hash_types::RichField;
-    use plonky2::iop::witness::Witness;
+    use plonky2::iop::witness::WitnessWrite;
     use plonky2::plonk::circuit_data::{CommonCircuitData, VerifierOnlyCircuitData};
     use plonky2::plonk::config::{Hasher, PoseidonGoldilocksConfig};
     use plonky2::plonk::proof::ProofWithPublicInputs;
