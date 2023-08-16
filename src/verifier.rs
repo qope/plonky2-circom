@@ -6,7 +6,8 @@ use plonky2::field::extension::{Extendable, FieldExtension};
 use plonky2::field::types::Field;
 use plonky2::gates::noop::NoopGate;
 use plonky2::hash::hash_types::RichField;
-use plonky2::iop::witness::{PartialWitness, Witness};
+use plonky2::iop::witness::PartialWitness;
+use plonky2::iop::witness::WitnessWrite;
 use plonky2::plonk::circuit_builder::CircuitBuilder;
 use plonky2::plonk::circuit_data::{
     CircuitConfig, CommonCircuitData, VerifierCircuitTarget, VerifierOnlyCircuitData,
@@ -68,7 +69,7 @@ where
     for i in 0..builder.config.fri_config.num_cap_elements() {
         builder.register_public_inputs(&inner_data.constants_sigmas_cap.0[i].elements);
     }
-    builder.verify_proof::<InnerC>(pt, &inner_data, &inner_cd);
+    builder.verify_proof::<InnerC>(&pt, &inner_data, &inner_cd);
 
     if print_gate_counts {
         builder.print_gate_counts(0);
@@ -641,7 +642,7 @@ pub fn generate_proof_base64<
         public_inputs,
     };
 
-    let proof_bytes = pwpi.to_bytes()?;
+    let proof_bytes = pwpi.to_bytes();
     assert_eq!(proof_bytes.len(), proof_size);
     println!("proof size: {}", proof_size);
 
@@ -1004,7 +1005,7 @@ mod tests {
     use plonky2::fri::reduction_strategies::FriReductionStrategy;
     use plonky2::fri::FriConfig;
     use plonky2::hash::hash_types::RichField;
-    use plonky2::iop::witness::Witness;
+    use plonky2::iop::witness::{Witness, WitnessWrite};
     use plonky2::plonk::circuit_data::{CommonCircuitData, VerifierOnlyCircuitData};
     use plonky2::plonk::config::{Hasher, PoseidonGoldilocksConfig};
     use plonky2::plonk::proof::ProofWithPublicInputs;
