@@ -146,6 +146,8 @@ template GlExtExpN(N) {
   component cdouble[N];
   for (var i = 0; i < N; i++) {
     cextmul[i] = GlExtMul();
+  }
+  for (var i = 0; i < N - 1; i++) {
     cdouble[i] = GlExtSquare();
   }
   cextmul[0].a[0] <== 1;
